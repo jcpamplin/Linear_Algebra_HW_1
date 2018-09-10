@@ -1,0 +1,18 @@
+load('/Users/johnpamplin/Documents/RStudio/Linear_Algebra/Data/LeukError.RData')
+library(ggplot2)
+#1. AML (Acute Myeloid)
+#2. ALL-B (Acute Lymphoblastic B-Cell)
+#3. ALL-T (Acute Lymphoblastic T-Cell)
+
+library(RColorBrewer)
+display.brewer.all()
+palette(brewer.pal(n = 8, name = "Dark2"))
+#cancer is in leuk[, 5001]
+
+factors <- as.factor(unique(leuk[,5001]))
+
+pcaOut = prcomp(leuk[,1:5000],3, scale = F)
+
+plot(pcaOut$x[,1],pcaOut$x[,2],col = leuk[,5001], xlab = "Principal Component 1", ylab = "Principal Component 2", main = "Leuk Data", pch=16)
+legend("bottomright" ,legend=factors, col=factors, pch=16)
+text(x = pcaOut$x[,1], y= pcaOut$x[,2], labels = row.names(leuk), adj= 0,3)
